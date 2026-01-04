@@ -1,0 +1,134 @@
+/* Basic styling for the entire page */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header styling */
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Heading styling */
+h1 {
+    font-size: 36px;
+    margin: 0;
+    padding: 10px;
+}
+
+/* Paragraph styling */
+p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+/* Image styling */
+img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 20px 0;
+    border: 5px solid white;
+}
+
+/* Link styling */
+a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    background-color: #333;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+a:hover {
+    background-color: #555;
+}
+
+/* Table styling */
+table {
+    width: 80%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th {
+    background-color: #333;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Responsive design for tablets */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 28px;
+    }
+    
+    p {
+        font-size: 16px;
+    }
+    
+    img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    table {
+        width: 95%;
+    }
+    
+    th, td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+/* Responsive design for mobile phones */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+    
+    p {
+        font-size: 14px;
+    }
+    
+    img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    a {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+    
+    table {
+        width: 100%;
+        font-size: 12px;
+    }
+    
+    th, td {
+        padding: 6px;
+    }
+}
