@@ -1,38 +1,71 @@
 <!DOCTYPE html> 
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <h1>Welcome to My Portfolio</h1>
-        <p>This is a showcase of my projects and skills.
-            i like to code. 
-        </p>
+        <p>This is a showcase of my projects and skills. I like to code.</p>
         <br>
         <img src="profile.webp" alt="Profile Picture" /> 
         <br>
         <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1">my projects</a>
-        <table>
-  <tr>
-    <th>Company</th>
-    <th>Contact</th>
-    <th>Country</th>
-  </tr>
-  <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
-</table>
+        
+        <!-- Theme Toggle Button -->
+        <br><br>
+        <button onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
     </header>
+
+    <!-- Interactive Text Update Section -->
+    <div class="interactive-section">
+        <h2>Interactive Text</h2>
+        <p id="changingText">Click the button below to change this text!</p>
+        <button onclick="updateText()">Update Text</button>
+    </div>
+
+    <!-- Form Section -->
+    <div class="interactive-section">
+        <h2>Say Hello!</h2>
+        <div class="form-group">
+            <label for="nameInput">Enter your name:</label>
+            <input type="text" id="nameInput" placeholder="Your name here...">
+        </div>
+        <button onclick="showGreeting()">Submit</button>
+        <div class="output" id="greetingOutput"></div>
+    </div>
+
+    <!-- Counter Section -->
+    <div class="interactive-section">
+        <h2>Simple Counter</h2>
+        <div class="counter-display" id="counterDisplay">0</div>
+        <button onclick="increaseCounter()">➕ Increase</button>
+        <button onclick="decreaseCounter()">➖ Decrease</button>
+        <button onclick="resetCounter()">🔄 Reset</button>
+    </div>
+
+    <!-- Original Table -->
+    <table>
+        <tr>
+            <th>Company</th>
+            <th>Contact</th>
+            <th>Country</th>
+        </tr>
+        <tr>
+            <td>Alfreds Futterkiste</td>
+            <td>Maria Anders</td>
+            <td>Germany</td>
+        </tr>
+        <tr>
+            <td>Centro comercial Moctezuma</td>
+            <td>Francisco Chang</td>
+            <td>Mexico</td>
+        </tr>
+    </table>
+
+    <script src="script.js"></script>
 </body>
 </html>
