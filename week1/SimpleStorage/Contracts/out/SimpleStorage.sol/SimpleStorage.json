@@ -1,0 +1,119 @@
+{
+    "abi": [
+        {
+            "type": "function",
+            "name": "get",
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256",
+                    "internalType": "uint256"
+                }
+            ],
+            "stateMutability": "view"
+        },
+        {
+            "type": "function",
+            "name": "set",
+            "inputs": [
+                {
+                    "name": "_favoriteNumber",
+                    "type": "uint256",
+                    "internalType": "uint256"
+                }
+            ],
+            "outputs": [],
+            "stateMutability": "nonpayable"
+        }
+    ],
+    "bytecode": {
+        "object": "0x608060405234801561000f575f80fd5b506101438061001d5f395ff3fe608060405234801561000f575f80fd5b5060043610610034575f3560e01c806360fe47b1146100385780636d4ce63c14610054575b5f80fd5b610052600480360381019061004d91906100ba565b610072565b005b61005c61007b565b60405161006991906100f4565b60405180910390f35b805f8190555050565b5f8054905090565b5f80fd5b5f819050919050565b61009981610087565b81146100a3575f80fd5b50565b5f813590506100b481610090565b92915050565b5f602082840312156100cf576100ce610083565b5b5f6100dc848285016100a6565b91505092915050565b6100ee81610087565b82525050565b5f6020820190506101075f8301846100e5565b9291505056fea2646970667358221220eeef8b4810d85c2b56a329031eda9a44082c89113a5a97d4d0a7c88eb17cbd4464736f6c63430008140033",
+        "sourceMap": "60:283:0:-:0;;;;;;;;;;;;;;;;;;;",
+        "linkReferences": {}
+    },
+    "deployedBytecode": {
+        "object": "0x608060405234801561000f575f80fd5b5060043610610034575f3560e01c806360fe47b1146100385780636d4ce63c14610054575b5f80fd5b610052600480360381019061004d91906100ba565b610072565b005b61005c61007b565b60405161006991906100f4565b60405180910390f35b805f8190555050565b5f8054905090565b5f80fd5b5f819050919050565b61009981610087565b81146100a3575f80fd5b50565b5f813590506100b481610090565b92915050565b5f602082840312156100cf576100ce610083565b5b5f6100dc848285016100a6565b91505092915050565b6100ee81610087565b82525050565b5f6020820190506101075f8301846100e5565b9291505056fea2646970667358221220eeef8b4810d85c2b56a329031eda9a44082c89113a5a97d4d0a7c88eb17cbd4464736f6c63430008140033",
+        "sourceMap": "60:283:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;153:96;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;254:84;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;153:96;227:15;208:16;:34;;;;153:96;:::o;254:84::-;289:7;315:16;;308:23;;254:84;:::o;88:117:1:-;197:1;194;187:12;334:77;371:7;400:5;389:16;;334:77;;;:::o;417:122::-;490:24;508:5;490:24;:::i;:::-;483:5;480:35;470:63;;529:1;526;519:12;470:63;417:122;:::o;545:139::-;591:5;629:6;616:20;607:29;;645:33;672:5;645:33;:::i;:::-;545:139;;;;:::o;690:329::-;749:6;798:2;786:9;777:7;773:23;769:32;766:119;;;804:79;;:::i;:::-;766:119;924:1;949:53;994:7;985:6;974:9;970:22;949:53;:::i;:::-;939:63;;895:117;690:329;;;;:::o;1025:118::-;1112:24;1130:5;1112:24;:::i;:::-;1107:3;1100:37;1025:118;;:::o;1149:222::-;1242:4;1280:2;1269:9;1265:18;1257:26;;1293:71;1361:1;1350:9;1346:17;1337:6;1293:71;:::i;:::-;1149:222;;;;:::o",
+        "linkReferences": {}
+    },
+    "methodIdentifiers": {
+        "get()": "6d4ce63c",
+        "set(uint256)": "60fe47b1"
+    },
+    "rawMetadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"get\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_favoriteNumber\",\"type\":\"uint256\"}],\"name\":\"set\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/SimpleStorage.sol\":\"SimpleStorage\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[\":forge-std/=lib/forge-std/src/\"]},\"sources\":{\"src/SimpleStorage.sol\":{\"keccak256\":\"0x0a089e2248d0e7d26ddbf744613c7aaed04071ba70efed4004a482129c1602b0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://61b4ec23c7d266175f64bc4cf1788880e32a067d5e6bb77429881d04ebc31948\",\"dweb:/ipfs/QmT5SsTdKMUCKzJWT6FPGrwqTbmS1oArUkvKN8n7QaACQX\"]}},\"version\":1}",
+    "metadata": {
+        "compiler": {
+            "version": "0.8.20+commit.a1b79de6"
+        },
+        "language": "Solidity",
+        "output": {
+            "abi": [
+                {
+                    "inputs": [],
+                    "stateMutability": "view",
+                    "type": "function",
+                    "name": "get",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ]
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "_favoriteNumber",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "nonpayable",
+                    "type": "function",
+                    "name": "set"
+                }
+            ],
+            "devdoc": {
+                "kind": "dev",
+                "methods": {},
+                "version": 1
+            },
+            "userdoc": {
+                "kind": "user",
+                "methods": {},
+                "version": 1
+            }
+        },
+        "settings": {
+            "remappings": [
+                "forge-std/=lib/forge-std/src/"
+            ],
+            "optimizer": {
+                "enabled": false,
+                "runs": 200
+            },
+            "metadata": {
+                "bytecodeHash": "ipfs"
+            },
+            "compilationTarget": {
+                "src/SimpleStorage.sol": "SimpleStorage"
+            },
+            "evmVersion": "shanghai",
+            "libraries": {}
+        },
+        "sources": {
+            "src/SimpleStorage.sol": {
+                "keccak256": "0x0a089e2248d0e7d26ddbf744613c7aaed04071ba70efed4004a482129c1602b0",
+                "urls": [
+                    "bzz-raw://61b4ec23c7d266175f64bc4cf1788880e32a067d5e6bb77429881d04ebc31948",
+                    "dweb:/ipfs/QmT5SsTdKMUCKzJWT6FPGrwqTbmS1oArUkvKN8n7QaACQX"
+                ],
+                "license": "MIT"
+            }
+        },
+        "version": 1
+    },
+    "id": 0
+}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SimpleStorage</title>
+    <script type="module">
+        import { createPublicClient, createWalletClient, custom, http } from 'https://esm.sh/viem';
+
+        const abi = [
+            {
+                "inputs": [],
+                "name": "get",
+                "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [{"internalType": "uint256", "name": "_favoriteNumber", "type": "uint256"}],
+                "name": "set",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
+
+        let account = '';
+        let contractAddress = '';
+
+        const anvilChain = {
+            id: 31337,
+            name: 'Anvil',
+            network: 'anvil',
+            nativeCurrency: {
+                decimals: 18,
+                name: 'Ether',
+                symbol: 'ETH',
+            },
+            rpcUrls: {
+                default: { http: ['http://127.0.0.1:8545'] },
+                public: { http: ['http://127.0.0.1:8545'] },
+            },
+        };
+
+        const publicClient = createPublicClient({
+            chain: anvilChain,
+            transport: http('http://127.0.0.1:8545')
+        });
+
+        window.connectWallet = async function() {
+            try {
+                const accounts = await window.ethereum.request({ 
+                    method: 'eth_requestAccounts' 
+                });
+                account = accounts[0];
+                document.getElementById('accountDisplay').innerText = account;
+                document.getElementById('message').innerText = 'Wallet connected!';
+            } catch (err) {
+                document.getElementById('message').innerText = 'Error: ' + err.message;
+            }
+        }
+
+        window.getValue = async function() {
+            contractAddress = document.getElementById('contractAddress').value;
+            
+            if (!contractAddress) {
+                document.getElementById('message').innerText = 'Please enter contract address';
+                return;
+            }
+
+            try {
+                const value = await publicClient.readContract({
+                    address: contractAddress,
+                    abi: abi,
+                    functionName: 'get'
+                });
+
+                document.getElementById('currentValue').innerText = value.toString();
+                document.getElementById('message').innerText = 'Value read successfully!';
+            } catch (err) {
+                document.getElementById('message').innerText = 'Error: ' + err.message;
+            }
+        }
+
+        window.setValue = async function() {
+            contractAddress = document.getElementById('contractAddress').value;
+            const newValue = document.getElementById('newValue').value;
+
+            if (!contractAddress) {
+                document.getElementById('message').innerText = 'Please enter contract address';
+                return;
+            }
+
+            if (!newValue) {
+                document.getElementById('message').innerText = 'Please enter a value';
+                return;
+            }
+
+            try {
+                const walletClient = createWalletClient({
+                    account: account,
+                    chain: anvilChain,
+                    transport: custom(window.ethereum)
+                });
+
+                const hash = await walletClient.writeContract({
+                    address: contractAddress,
+                    abi: abi,
+                    functionName: 'set',
+                    args: [BigInt(newValue)]
+                });
+
+                document.getElementById('message').innerText = 'Transaction sent! Hash: ' + hash;
+                
+                setTimeout(getValue, 2000);
+            } catch (err) {
+                document.getElementById('message').innerText = 'Error: ' + err.message;
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 50px;
+        }
+        input {
+            padding: 5px;
+            margin: 5px;
+            width: 300px;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>SimpleStorage DApp</h1>
+    
+    <h3>Connect Wallet</h3>
+    <button onclick="connectWallet()">Connect MetaMask</button>
+    <p>Connected Account: <span id="accountDisplay">Not connected</span></p>
+    
+    <hr>
+    
+    <h3>Contract Address</h3>
+    <input type="text" id="contractAddress" placeholder="Enter contract address">
+    
+    <hr>
+    
+    <h3>Read Value</h3>
+    <button onclick="getValue()">Get Current Value</button>
+    <p>Current Value: <span id="currentValue">-</span></p>
+    
+    <hr>
+    
+    <h3>Write Value</h3>
+    <input type="number" id="newValue" placeholder="Enter new value">
+    <br>
+    <button onclick="setValue()">Set New Value</button>
+    
+    <hr>
+    
+    <div id="message">Ready</div>
+
+</body>
+</html>
