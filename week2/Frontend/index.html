@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ledger DApp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ledger DApp</h1>
+        
+        <button id="connectButton">Connect MetaMask</button>
+        
+        <div id="walletInfo" class="hidden">
+            <p>Address: <span id="userAddress"></span></p>
+            <p>My Balance: <span id="userBalance"></span> ETH</p>
+        </div>
+
+        <div id="depositSection" class="hidden">
+            <h2>Deposit</h2>
+            <input type="text" id="depositAmount" placeholder="Amount in ETH">
+            <button id="depositButton">Deposit</button>
+        </div>
+
+        <div id="transferSection" class="hidden">
+            <h2>Transfer</h2>
+            <input type="text" id="transferTo" placeholder="Recipient Address">
+            <input type="text" id="transferAmount" placeholder="Amount in ETH">
+            <button id="transferButton">Transfer</button>
+        </div>
+
+        <div id="checkSection" class="hidden">
+            <h2>Check Balance</h2>
+            <input type="text" id="checkAddress" placeholder="Address">
+            <button id="checkButton">Check Balance</button>
+            <p id="checkResult"></p>
+        </div>
+
+        <p id="status"></p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
