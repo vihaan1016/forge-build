@@ -1,14 +1,17 @@
-// Contract address deployed on Sepolia
-const CONTRACT_ADDRESS = "0x117aEeAD6F30e9fEbEA4b6BF8477B722F5A4d970";
+// Contract address on sepolia
+const CONTRACT_ADDRESS = "0x81D69c9240B80Ce0CAD7dd78bB6f17C8c6166cFd";
 
 // Contract ABI
 const CONTRACT_ABI = [
-    "function deposit() public payable",
+    "function deposit(uint256 _amount) public",
     "function transfer(uint256 _amount, address _receiver) public",
+    "function withdraw(uint256 _amount) public",
     "function getBalance(address user) public view returns (uint256)",
     "function claimInitialBalance() public",
     "function hasReceivedInitial(address) public view returns (bool)",
-    "event InitialBalanceGiven(address indexed user, uint256 amount)"
+    "event InitialBalanceGiven(address indexed user, uint256 amount)",
+    "event Deposit(address indexed user, uint256 amount)",
+    "event Transfer(address indexed from, address indexed to, uint256 amount)"
 ];
 
 // Global variables
@@ -22,18 +25,14 @@ const connectButton = document.getElementById("connectButton");
 const walletInfo = document.getElementById("walletInfo");
 const depositSection = document.getElementById("depositSection");
 const transferSection = document.getElementById("transferSection");
+const withdrawSection = document.getElementById("withdrawSection");
 const checkSection = document.getElementById("checkSection");
-const status = document.getElementById("status");
+const statusMessage = document.getElementById("status");
 
 // Connect Wallet
+// Use try catch for error handling (supposedly a good practice)
 connectButton.onclick = async function() {
-    
-        // Check if MetaMask is installed
-        if (!window.ethereum) {
-            showStatus("Please install MetaMask!");
-            return;
-        }
-
+    try {
         // Connect to MetaMask
         provider = new ethers.BrowserProvider(window.ethereum);
         await provider.send("eth_requestAccounts", []);
@@ -45,8 +44,7 @@ connectButton.onclick = async function() {
         console.log("Connected to network:", network.name, "Chain ID:", network.chainId.toString());
         
         // Sepolia chainId is 11155111
-        // Added by AI while debugging chainId comparison
-        // Adds the switch to Sepolia functionality if on wrong network
+        // Given by AI to directly switch to Sepolia
         if (network.chainId !== 11155111n) {
             showStatus(`Wrong network! You're on chainId ${network.chainId}. Please switch to Sepolia (chainId 11155111)`);
             
@@ -66,27 +64,32 @@ connectButton.onclick = async function() {
             return;
         }
 
+        // Verify contract address
+        if (CONTRACT_ADDRESS !== "0x81D69c9240B80Ce0CAD7dd78bB6f17C8c6166cFd") {
+            showStatus("Please update CONTRACT_ADDRESS in app.js!");
+            return;
+        }
+
         // Create contract instance
         contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
 
         // Get user balance
         const balance = await contract.getBalance(userAddress);
         const balanceInEth = ethers.formatEther(balance);
-
+        
         // Check if user has claimed initial balance
         const hasClaimed = await contract.hasReceivedInitial(userAddress);
         
-        // If not claimed or balance is 0, automatically claim
-        // If already claimed, then just show balance
-        if (!hasClaimed || balance === 0n) {
-            showStatus("Claiming your initial 1000 ETH...");
+        // Auto-claim if they haven't received initial balance yet
+        if (!hasClaimed) {
+            showStatus("Claiming your initial 1000 ETH tokens...");
             const claimTx = await contract.claimInitialBalance();
             await claimTx.wait();
             
             const newBalance = await contract.getBalance(userAddress);
             const newBalanceInEth = ethers.formatEther(newBalance);
             document.getElementById("userBalance").textContent = newBalanceInEth;
-            showStatus("Claimed 1000 ETH successfully!");
+            showStatus("Welcome! You received 1000 ETH tokens!");
         } else {
             document.getElementById("userBalance").textContent = balanceInEth;
         }
@@ -95,9 +98,11 @@ connectButton.onclick = async function() {
         document.getElementById("userAddress").textContent = userAddress;
         
         // Show all sections
+        // Once the user is connected, show all sections
         walletInfo.classList.remove("hidden");
         depositSection.classList.remove("hidden");
         transferSection.classList.remove("hidden");
+        withdrawSection.classList.remove("hidden");
         checkSection.classList.remove("hidden");
 
         // Update button
@@ -106,24 +111,25 @@ connectButton.onclick = async function() {
 
         showStatus("Connected successfully!");
 
-    
+    } catch (error) {
+        console.error(error);
+        showStatus("Error: " + error.message);
+    }
 };
 
 // Deposit Button
 document.getElementById("depositButton").onclick = async function() {
+    try {
         const amount = document.getElementById("depositAmount").value;
         
-        if (!amount) {
-            showStatus("Please enter an amount");
+        if (!amount || amount <= 0) {
+            showStatus("Please enter a valid amount");
             return;
         }
 
-        showStatus("Sending transaction...");
+        showStatus("Adding tokens to your balance...");
 
-        // Send deposit transaction
-        const tx = await contract.deposit({
-            value: ethers.parseEther(amount)
-        });
+        const tx = await contract.deposit(ethers.parseEther(amount));
 
         showStatus("Waiting for confirmation...");
         await tx.wait();
@@ -133,13 +139,18 @@ document.getElementById("depositButton").onclick = async function() {
         const balanceInEth = ethers.formatEther(balance);
         document.getElementById("userBalance").textContent = balanceInEth;
 
-        showStatus("Deposit successful!");
+        showStatus(`Successfully deposited ${amount} ETH tokens! New balance: ${balanceInEth} ETH`);
         document.getElementById("depositAmount").value = "";
 
+    } catch (error) {
+        console.error(error);
+        showStatus("Error: " + error.message);
+    }
 };
 
 // Transfer Button
 document.getElementById("transferButton").onclick = async function() {
+    try {
         const to = document.getElementById("transferTo").value;
         const amount = document.getElementById("transferAmount").value;
 
@@ -148,7 +159,7 @@ document.getElementById("transferButton").onclick = async function() {
             return;
         }
 
-        showStatus("Sending transaction...");
+        showStatus("Sending transfer...");
 
         // Send transfer transaction
         const tx = await contract.transfer(
@@ -164,14 +175,19 @@ document.getElementById("transferButton").onclick = async function() {
         const balanceInEth = ethers.formatEther(balance);
         document.getElementById("userBalance").textContent = balanceInEth;
 
-        showStatus("Transfer successful!");
+        showStatus(`Transfer successful! New balance: ${balanceInEth} ETH`);
         document.getElementById("transferTo").value = "";
         document.getElementById("transferAmount").value = "";
 
+    } catch (error) {
+        console.error(error);
+        showStatus("Error: " + error.message);
+    }
 };
 
 // Check Balance Button
 document.getElementById("checkButton").onclick = async function() {
+    try {
         const address = document.getElementById("checkAddress").value;
 
         if (!address) {
@@ -186,11 +202,48 @@ document.getElementById("checkButton").onclick = async function() {
         document.getElementById("checkResult").textContent = 
             "Balance: " + balanceInEth + " ETH";
         showStatus("Balance fetched successfully!");
+
+    } catch (error) {
+        console.error(error);
+        showStatus("Error: " + error.message);
+    }
+};
+
+// Withdraw Button
+document.getElementById("withdrawButton").onclick = async function() {
+    try {
+        const amount = document.getElementById("withdrawAmount").value;
+
+        if (!amount || amount <= 0) {
+            showStatus("Please enter a valid amount");
+            return;
+        }
+
+        showStatus("Withdrawing tokens...");
+
+        // Withdraw tokens
+        const tx = await contract.withdraw(ethers.parseEther(amount));
+
+        showStatus("Waiting for confirmation...");
+        await tx.wait();
+
+        // Update balance
+        const balance = await contract.getBalance(userAddress);
+        const balanceInEth = ethers.formatEther(balance);
+        document.getElementById("userBalance").textContent = balanceInEth;
+
+        showStatus(`Successfully withdrew ${amount} ETH tokens! New balance: ${balanceInEth} ETH`);
+        document.getElementById("withdrawAmount").value = "";
+    } catch (error) {
+        console.error(error);
+        showStatus("Error: " + error.message);
+    }
 };
 
 // Helper function to show status
+// Added by AI for better user feedback
 function showStatus(message) {
-    status.textContent = message;
-    status.style.backgroundColor = "#fff3cd";
-    status.style.color = "#856404";
+    statusMessage.textContent = message;
+    statusMessage.style.backgroundColor = "#fff3cd";
+    statusMessage.style.color = "#856404";
 }

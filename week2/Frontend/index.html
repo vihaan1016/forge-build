@@ -8,19 +8,28 @@
     <div class="container">
         <h1>Ledger DApp</h1>
         
+        <!-- Connect Wallet Button -->
         <button id="connectButton">Connect MetaMask</button>
         
+        <!-- Wallet Info -->
         <div id="walletInfo" class="hidden">
             <p>Address: <span id="userAddress"></span></p>
             <p>My Balance: <span id="userBalance"></span> ETH</p>
         </div>
 
+        <!-- Deposit Section -->
         <div id="depositSection" class="hidden">
             <h2>Deposit</h2>
-            <input type="text" id="depositAmount" placeholder="Amount in ETH">
+            <input type="text" id="depositAmount" placeholder="Enter an Amount">
             <button id="depositButton">Deposit</button>
         </div>
+        <div id="withdrawSection" class="hidden">
+            <h2>Withdraw</h2>
+            <input type="text" id="withdrawAmount" placeholder="Enter an Amount">
+            <button id="withdrawButton">Withdraw</button>
+        </div>
 
+        <!-- Transfer Section -->
         <div id="transferSection" class="hidden">
             <h2>Transfer</h2>
             <input type="text" id="transferTo" placeholder="Recipient Address">
@@ -28,6 +37,7 @@
             <button id="transferButton">Transfer</button>
         </div>
 
+        <!-- Check Balance Section -->
         <div id="checkSection" class="hidden">
             <h2>Check Balance</h2>
             <input type="text" id="checkAddress" placeholder="Address">
@@ -35,10 +45,11 @@
             <p id="checkResult"></p>
         </div>
 
+        <!-- Status Message -->
         <p id="status"></p>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
