@@ -8,15 +8,13 @@ contract Ledger {
 
     // -- EVENTS--
     event Deposit(address indexed user, uint256 amount);
-    event Withdraw(address indexed user, uint256 amount);
+    event Transfer(address indexed from, address indexed to, uint256 amount);
     event InitialBalanceGiven(address indexed user, uint256 amount);
 
     // -- CONSTANTS--
     uint256 public constant INITIAL_BALANCE = 1000 ether;
 
     // --MODIFIERS--
-    // Modifier to automatically give initial balance
-    // Used to avoid repeated code in deposit and transfer functions
     modifier giveInitialBalance() {
         if (!hasReceivedInitial[msg.sender]) {
             balance[msg.sender] = INITIAL_BALANCE;
@@ -27,11 +25,14 @@ contract Ledger {
     }
 
     // -- FUNCTIONS--
-    function deposit() public payable giveInitialBalance {
-        balance[msg.sender] += msg.value;
-        emit Deposit(msg.sender, msg.value);
+    
+    // Deposit fake ETH tokens to increase balance
+    function deposit(uint256 _amount) public giveInitialBalance {
+        balance[msg.sender] += _amount;
+        emit Deposit(msg.sender, _amount);
     }
     
+    // Transfer tokens between users
     function transfer(uint256 _amount, address _receiver) public giveInitialBalance {
         require(balance[msg.sender] >= _amount, "Insufficient balance");
         balance[msg.sender] -= _amount;
@@ -44,13 +45,20 @@ contract Ledger {
         }
         
         balance[_receiver] += _amount;
+        emit Transfer(msg.sender, _receiver, _amount);
+    }
+    
+    // Withdraw tokens (reduce balance)
+    function withdraw(uint256 _amount) public {
+        require(balance[msg.sender] >= _amount, "Insufficient balance");
+        balance[msg.sender] -= _amount;
     }
     
     function getBalance(address user) public view returns (uint256) {
         return balance[user];
     }
     
-    // Function to claim initial balance manually
+    // Claim initial 1000 ETH tokens
     function claimInitialBalance() public {
         require(!hasReceivedInitial[msg.sender], "Already claimed");
         balance[msg.sender] = INITIAL_BALANCE;
