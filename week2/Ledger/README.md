@@ -1,66 +1,83 @@
-## Foundry
+# Ledger DApp
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Features
 
-Foundry consists of:
+- **Wallet Connection**: Connect your MetaMask wallet to interact with the DApp
+- **Initial Balance**: Automatically receive 1000 ETH on first use
+- **Deposit**: Add ETH to your contract balance
+- **Transfer**: Send ETH to other addresses
+- **Balance Checking**: View the balance of any address
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Smart Contract
 
-## Documentation
+**Contract Address (Sepolia)**: `0x81D69c9240B80Ce0CAD7dd78bB6f17C8c6166cFd`
 
-https://book.getfoundry.sh/
+### Contract Functions
 
-## Usage
+- `deposit()`: Deposit ETH into your balance
+- `transfer(uint256 _amount, address _receiver)`: Transfer tokens to another address
+- `getBalance(address user)`: View balance of any address
+- `claimInitialBalance()`: Manually claim your initial 1000 ETH
+- `hasReceivedInitial(address)`: Check if an address has claimed their initial balance
 
-### Build
+### Contract Features
 
-```shell
-$ forge build
+- Users automatically receive 1000 ETH on first interaction
+- Both sender and receiver get initial balance when needed
+- Balance tracking via mapping
+- Event emissions for deposits and initial balance claims
+
+
+## Prerequisites
+
+- [MetaMask](https://metamask.io/) browser extension
+- Sepolia testnet ETH (get from [faucet](https://sepoliafaucet.com/))
+- Modern web browser
+- [Foundry](https://book.getfoundry.sh/) (for contract development/testing)
+
+## Setup & Usage
+
+### Frontend
+
+1. Clone the repository
+2. Open `index.html` in a web browser (or serve via a local server)
+3. Click "Connect MetaMask"
+4. Ensure you're on the Sepolia testnet (the app will prompt you to switch if needed)
+5. Your initial 1000 ETH will be automatically claimed
+6. Start depositing and transferring!
+
+### Smart Contract Development
+
+The contract is built using Foundry. To test:
+
+```bash
+forge test
 ```
 
-### Test
+To deploy:
 
-```shell
-$ forge test
+```bash
+forge create --rpc-url <SEPOLIA_RPC_URL> \
+  --private-key <YOUR_PRIVATE_KEY> \
+  src/Counter.sol:Ledger
 ```
 
-### Format
+## Testing
 
-```shell
-$ forge fmt
+The project includes two test cases in `Counter.t.sol`:
+
+- `test_Transfer()`: Verifies successful transfer between addresses
+- `test_Transfer_InsufficientBalance()`: Ensures transfers fail when balance is insufficient
+
+Run tests with:
+```bash
+forge test -vv
 ```
 
-### Gas Snapshots
+## Network Handling
 
-```shell
-$ forge snapshot
-```
+The DApp automatically detects if you're on the wrong network and will:
+1. Alert you that you need to be on Sepolia
+2. Attempt to switch your MetaMask to Sepolia automatically
+3. Reload the page after successful network switch
 
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
