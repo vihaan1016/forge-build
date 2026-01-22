@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAmm Interface</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="swap.css">
+</head>
+<body>
+    <h1>VAmm Interface</h1>
+
+    <button id="connectBtn">Connect Wallet</button>
+
+    <div id="status">
+        <p>Status: <span id="statusText">Not Connected</span></p>
+        <p>Account: <span id="account">-</span></p>
+        <p>Your Token A Balance: <span id="balanceA">0</span></p>
+        <p>Your Token B Balance: <span id="balanceB">0</span></p>
+        <p>Reserve A: <span id="reserveA">0</span></p>
+        <p>Reserve B: <span id="reserveB">0</span></p>
+    </div>
+
+    <hr>
+
+    <h2>Initial Funding</h2>
+    <button id="fundBtn">Get Initial Tokens (1000 A + 1000 B)</button>
+    <p id="fundError"></p>
+    <p id="fundSuccess"></p>
+
+    <hr>
+
+    <h2>Add Liquidity</h2>
+    <label>Amount Token A: <input type="number" id="addAmountA" placeholder="0.0"></label><br>
+    <label>Amount Token B: <input type="number" id="addAmountB" placeholder="0.0"></label><br>
+    <button id="addLiqBtn">Add Liquidity</button>
+    <p id="addError"></p>
+    <p id="addSuccess"></p>
+
+    <hr>
+
+    <h2>Remove Liquidity</h2>
+    <label>Share Amount: <input type="number" id="removeShares" placeholder="0.0"></label><br>
+    <p>Your shares: <span id="yourShares">0</span></p>
+    <button id="removeLiqBtn">Remove Liquidity</button>
+    <p id="removeError"></p>
+    <p id="removeSuccess"></p>
+
+    <hr>
+
+    <h2>Swap Tokens</h2>
+    <h3>Swap A for B</h3>
+    <label>Amount A: <input type="number" id="swapAAmount" placeholder="0.0"></label><br>
+    <button id="swapABtn">Swap A → B</button>
+
+    <h3>Swap B for A</h3>
+    <label>Amount B: <input type="number" id="swapBAmount" placeholder="0.0"></label><br>
+    <button id="swapBBtn">Swap B → A</button>
+
+    <p id="swapError"></p>
+    <p id="swapSuccess"></p>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+    <script type="module" src="swap.js"></script>
+</body>
+</html>
